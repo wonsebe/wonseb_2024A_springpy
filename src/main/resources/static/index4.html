@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<h3>  인천광역시 아파트 매매 실거래가 정보 </h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>시군구 </th> <th>단지명 </th> <th>전용면적 </th>
+        <th>계약년월 </th> <th>계약일 </th>
+        <th>거래금액 </th> <th>층</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+<script>
+    //Flask 서버에 통신
+    $.ajax({
+    method:'get' ,
+    url:"http://127.0.0.1:5000/apartment" ,
+    success: r=>{console.log(r);
+        let tbody= document.querySelector('tbody')
+        let html=''
+        r.forEach(o =>{
+        html+=` <tr><th>${o.city_county_district}</th> <th>${o.complex_name}</th>
+                <th>${o.exclusive_area}</th> <th>${o.contract_year_month}</th>
+                <th>${o.contract_date}</th> <th>${o.transaction_amount}</th> <th>${o.floor}</th>
+                </tr>`
+
+
+    })
+    tbody.innerHTML=html;
+    }
+    })
+</script>
+</body>
+</html>
