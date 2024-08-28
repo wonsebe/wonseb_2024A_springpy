@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<h3>  쿠우쿠우 전국 매장 정보 </h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>번호 </th> <th>매장명 </th> <th>연락처 </th><th>주소 </th> <th>영업시간 </th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+<script>
+    //Flask 서버에 통신
+    $.ajax({
+        async:false,
+        method:'get' ,
+        url:"http://192.168.30.14:5000/qooqoo" ,
+        success: r=>{console.log(r);
+            let tbody= document.querySelector('tbody')
+            let html=''
+            r.forEach(매장 =>{
+            html+=` <tr><th>${매장.번호} </th> <th>${매장.지점명} </th> <th>${매장.연락처} </th><th>${매장.주소} </th> <th>${매장.영업시간} </th></tr>`
+    })
+    tbody.innerHTML=html;
+    }
+    })
+</script>
+</body>
+</html>
