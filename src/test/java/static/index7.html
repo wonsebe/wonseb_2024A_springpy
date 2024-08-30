@@ -37,22 +37,35 @@
                 thead.innerHTML=html; //1~3 대입
 
                 let tbody = document.querySelector('tbody')
-                let html2=`<tr>
-                                <td> 25% </td>
-                                <td> ${ response['NO']['25%'] } </td>
-                                <td> ${ response['건축년도']['25%'] } </td>
-                                <td> ${ response['계약년월']['25%'] } </td>
-                                <td> ${ response['계약일']['25%'] } </td>
-                                <td> ${ response['본번']['25%'] } </td>
-                                <td> ${ response['부번']['25%'] } </td>
-                                <td> ${ response['월세금(만원)']['25%'] } </td>
-                                <td> ${ response['전용면적(㎡)']['25%'] } </td>
-                                <td> ${ response['종전계약 월세(만원)']['25%'] } </td>
-                                <td> ${ response['층']['25%'] } </td>
+                // Create a new table row
+                let tr = document.querySelector('tr');
+                // Add the percentage cell
+                let tdPercentage = document.querySelector('td');
+                tr.appendChild(tdPercentage);
+                tdPercentage.textContent = '25%';
+                // let html2=`<tr>
+                //                 <td> 25% </td>
+                //                 <td> ${ response['NO']['25%'] } </td>
+                //                 <td> ${ response['건축년도']['25%'] } </td>
+                //                 <td> ${ response['계약년월']['25%'] } </td>
+                //                 <td> ${ response['계약일']['25%'] } </td>
+                //                 <td> ${ response['본번']['25%'] } </td>
+                //                 <td> ${ response['부번']['25%'] } </td>
+                //                 <td> ${ response['월세금(만원)']['25%'] } </td>
+                //                 <td> ${ response['전용면적(㎡)']['25%'] } </td>
+                //                 <td> ${ response['종전계약 월세(만원)']['25%'] } </td>
+                //                 <td> ${ response['층']['25%'] } </td>
 
 
-                           </tr>`
-                tbody.innerHTML=html2
+                //            </tr>`
+        // Iterate over each property in the response object
+        Object.keys(response1).forEach(key => {
+            let td = document.querySelector('td');
+            td.textContent = response1[key]['25%'];
+            tr.appendChild(td);
+        });
+        // Append the row to the table body
+        tableBody.appendChild(tr);
 
             console.log(response);
             console.log(Object.keys(response))  //Js에서 객체내 모든 키를 호출
