@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--xml 주석 -->
+<mapper namespace="example.log.task1.AccountDao" >
+    <!--1. 가계부 등록 -->
+    <insert id="create" parameterType="example.log.task1.AccountDto">
+        insert into houseaccount(hinfo,hprice,hdate) values ( #{hinfo}, #{hprice}, #{hdate} )
+    </insert>
+
+    <!--2. 전체 출력 -->
+    <select id="allPrint" resultType="example.log.task1.AccountDto">
+        select * from houseaccount
+    </select>
+
+    <!--3. 수정 -->
+    <update id="update" parameterType="example.log.task1.AccountDto">
+        update houseaccount set hinfo= #{hinfo} , hprice= #{hprice}, hdate= #{hdate} where hno= #{hno}
+    </update>
+
+    <!--4. 삭제 -->
+    <delete id="delete" parameterType="int">
+        delete from houseaccount where hno= #{hno}
+    </delete>
+
+
+</mapper>  <!-- mapper end -->

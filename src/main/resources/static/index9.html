@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<h3>  가계부 정리 </h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>번호 </th> <th>설명 </th> <th>금액 </th> <th>날짜 </th> <th>선택 </th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table><br/>
+    설명할 내용 입력: <input class="hinfo">
+    금액 입력: <input class="hprice">
+    날짜 입력: <input class="hdate">
+    <button onclick="create()" type="button">입력하기</button>
+
+
+<script>
+    //Flask 서버에 통신
+    print();
+    function print(){
+    $.ajax({
+        async:false,
+        method:'get' ,
+        url:"/houseaccountbook/hprint" ,
+        success: r=>{console.log(r);
+            //어디에
+            let tbody= document.querySelector('tbody')
+            //무엇을
+            let html=''
+            r.forEach(정리 =>{
+            html+=`  <tr>
+                        <th>${정리.hno}</th> <th>${정리.hinfo}</th> <th>${정리.hprice}</th> <th>${정리.hdate}</th>
+                    </tr>`
+    })
+    //출력
+    tbody.innerHTML=html;
+    }
+    })
+}
+
+    function create(){
+        let hinfo=document.querySelector('.hinfo').value
+        let hprice=document.querySelector('.hprice').value
+        let hdate=document.querySelector('.hdate').value
+
+        let info = { hinfo : hinfo , hprice : hprice , hdate:hdate }; console.log( info );
+
+
+        $.ajax({
+        async : false ,
+        method : 'post' ,
+        url : '/houseaccountbook/hcreate',
+        data : info ,
+        success : (result)=>{ console.log( result );
+        } // success end
+        
+
+    }); console.log('result');
+    print();
+    }
+</script>
+</body>
+</html>

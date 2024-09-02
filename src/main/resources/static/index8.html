@@ -5,73 +5,66 @@
     <title>Title</title>
 </head>
 <body>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-<h3> 아파트 매매 3년치 병합</h3>
+<h3> 인천광역시 부평구 아파트전월세 통계  </h3>
 <table border="1">
     <thead>
-    <!-- <tr>
-        <th></th> <th>월세 </th> <th>전세 </th> <th>학력 </th> <th>계약유형 </th> <th>지역</th> <th>채용기간</th>
-
-    </tr> -->
     </thead>
     <tbody>
-
     </tbody>
 </table>
+<!-- JQUERY -->
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-    //Flask 서버에 통신
     $.ajax({
-        async:false,
-        method:'get' ,
-        url:"http://192.168.30.14:5000/engraft" ,
-        success: response=>{
-            //1
-                //1-1 테이블 제목
-                let thead=document.querySelector('thead')
-                //1-2 제목 구성
-                let html=`<tr>
-                            <th>    </th> <th>NO</th> <th>건축년도</th> <th>계약연월</th> <th>계약일</th> <th>본번</th>
-                            <th>부번</th>  <th>월세금(만원)</th> <th>전용면적</th> <th>종전계약 월세(만일)</th>
-                            <th>층</th>
-                            </tr>`
-                thead.innerHTML=html; //1~3 대입
+        async : false , method : 'get' , url : 'http://localhost:5000/trans1' , success : response => {
+            console.log( response )
+            // 1.
+            let thead = document.querySelector('thead') // 1-1 테이블 제목
+                // 1-2 제목 구성
+            let responseKeys = Object.keys( response )
 
-                let tbody = document.querySelector('tbody')
-                let html2=`<tr>
-                                <td> 25% </td>
-                                <td> ${ response['NO']['25%'] } </td>
-                                <td> ${ response['건축년도']['25%'] } </td>
-                                <td> ${ response['계약년월']['25%'] } </td>
-                                <td> ${ response['계약일']['25%'] } </td>
-                                <td> ${ response['본번']['25%'] } </td>
-                                <td> ${ response['부번']['25%'] } </td>
-                                <td> ${ response['월세금(만원)']['25%'] } </td>
-                                <td> ${ response['전용면적(㎡)']['25%'] } </td>
-                                <td> ${ response['종전계약 월세(만원)']['25%'] } </td>
-                                <td> ${ response['층']['25%'] } </td>
+            let html = `<tr> <th> </th>`
+            responseKeys.forEach( key => {  html += ` <th> ${ key } </th>`})
 
+            html += `</tr>`
+            thead.innerHTML = html;  // 1-3 대입
 
-                           </tr>`
-                tbody.innerHTML=html2
+                // 1- 4 내용 구성
+            let tbody = document.querySelector('tbody')
 
-            console.log(response);
-            console.log(Object.keys(response))  //Js에서 객체내 모든 키를 호출
-            let responseKeys=Object.keys(response)
-            responseKeys.forEach(key =>{
-                console.log(key)    //통계필드명
-                console.log(response[`${key}`])//통계필드값
+            const allDetailKeys = Object.keys(response[responseKeys[0]]);
+            let html2 = ``
+            // 각 detailKey마다 행을 생성
+            allDetailKeys.forEach(detailkey => {
+                html2 += `<tr> <td> ${detailkey} </td>`;
+                // 각 responseKey마다 해당 detailKey의 값을 출력
+                responseKeys.forEach(key => {
+                    const keyValue = response[key];
+                    html2 += `<td> ${keyValue[detailkey]} </td>`;
+                });
+                html2 += `</tr>`;
+            });
 
-                keyValue=response[`${key}`]
-                console.log(Object.keys(keyValue))  //통계 계산/항목 명
-                detailKeys=Object.keys(keyValue)
-                detailKeys.forEach(detailkey => {
-                    console.log(detailkey)
-                    console.log(keyValue[`${detailkey}`])
+            tbody.innerHTML = html2;
+
+            // 2.
+            /*
+            console.log( response );
+            console.log( Object.keys( response  ) ); // JS 에서 객체내 모든 키를 호출 : Object.keys( 객체 )
+            let responseKeys = Object.keys( response )
+            responseKeys.forEach( key => {
+                console.log( key ) // 통계에 사용되는 거래정보 필드명
+                console.log( response[`${key}`] ) // 통계 필드의 값
+
+                keyValue = response[`${key}`]
+                console.log( Object.keys( keyValue ) ) // 통계 계산/항목 명 // ['25%', '50%', '75%', 'count', 'max', 'mean', 'min', 'std']
+                detailKeys = Object.keys( keyValue )
+                detailKeys.forEach( detailkey => {
+                    console.log( detailkey )
+                    console.log( keyValue[`${ detailkey }`] )
                 })
             })
-
-
-
+            */
         }
     })
 </script>
