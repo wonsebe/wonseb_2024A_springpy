@@ -29,4 +29,22 @@
 [2] '서버소켓' 구현
     1. 스프링에서 구현하는 방법
         1. '웹소켓' 라이브러리 디펜더시 추가 :
-    2. 서버소켓 핸들러(컨트롤러)
+    2. 서버소켓 핸들러(컨트롤러) 설정하기
+        1.WebSocketConfig 클래스 만들기
+        2.implement WebSocketConfigurer 인터페이스 구현
+        3. registerWebSocketConfigurer 메소드 구현
+            - registry.addHandler( "컨트롤러객체","ws서버소켓주소정의");
+            4.
+
+
+[3] 클라이언트소켓 구현 #js
+    1. js에서 '클라이언트소켓'구현 방법
+        WebSocket 클래스 이용한 클라이언트 소켓 구현
+        1. 클라이언트 소켓 생성
+        new WebSocket("서버소켓의URL")
+
+
+        객체가 생성될 떄 접속 연결 요청
+        객체가 초기화 될 때 접속 끊기
+
+
